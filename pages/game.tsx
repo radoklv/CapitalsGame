@@ -1,5 +1,6 @@
 import React from "react";
 import dynamic from "next/dynamic";
+import classes from "./game.module.scss";
 
 const Game = dynamic(() => import("@/components/Game"), { ssr: false });
 
@@ -9,9 +10,8 @@ const token = "c4caaefe5fa7dc03456136d044ab89555941a2";
 type GameProps = { data: { name: string; capital: string }[] };
 
 const GamePage: React.FC<GameProps> = (props) => {
-  console.log(props);
   return (
-    <div>
+    <div className={classes.gamePage}>
       <Game data={props.data} />
     </div>
   );

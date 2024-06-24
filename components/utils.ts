@@ -15,7 +15,7 @@ export const createEnumFromObjects = (
   const enumObject = {} as any;
 
   objects.forEach((obj: Countries) => {
-    enumObject[obj.name.toUpperCase()] = obj.capital;
+    enumObject[obj.name] = obj.capital;
   });
   return Object.freeze(enumObject);
 };

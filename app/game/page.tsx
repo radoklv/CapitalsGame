@@ -1,23 +1,23 @@
 import React from "react";
 import dynamic from "next/dynamic";
-import classes from "./game.module.scss";
+import classes from "./page.module.scss";
 
 const Game = dynamic(() => import("@/components/Game"), { ssr: false });
 
 const url = "https://lenotask.000webhostapp.com/getCountiesData/";
 const token = "c4caaefe5fa7dc03456136d044ab89555941a2";
 
-type GameProps = { data: { name: string; capital: string }[] };
+async function GamePage() {
+  const data = await getData();
 
-const GamePage: React.FC<GameProps> = (props) => {
   return (
     <div className={classes.gamePage}>
-      <Game data={props.data} />
+      <Game data={data} />
     </div>
   );
-};
+}
 
-export async function getServerSideProps() {
+async function getData() {
   const res = await fetch(url, {
     method: "GET",
     headers: {
@@ -26,13 +26,11 @@ export async function getServerSideProps() {
     },
   });
 
-  const data = await res.json();
+  if (!res.ok) {
+    // This will activate the closest `error.js` Error Boundary
+    throw new Error("Failed to fetch data");
+  }
 
-  return {
-    props: {
-      data,
-    },
-  };
+  return res.json();
 }
-
 export default GamePage;

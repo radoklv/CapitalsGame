@@ -13,11 +13,19 @@
   border: 1px solid #000;
   cursor: pointer;
 
-  &--selected{
+  &--selected {
     background-color: #a1a1a1;
+  }
+
+  &--correct {
+    background-color: green !important;
+  }
+
+  &--wrong {
+    background-color: red !important;
   }
 }
 
-.listItem+.listItem{
-    margin-top: 10px;
+.listItem + .listItem {
+  margin-top: 10px;
 }

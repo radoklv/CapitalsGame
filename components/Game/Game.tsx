@@ -1,16 +1,18 @@
+"use client";
+
 import React, { useEffect, useMemo, useState } from "react";
 import classes from "./Game.module.scss";
 
 import List from "@/components/List";
 import { createEnumFromObjects, shuffleArray } from "@/components/utils";
-import type { Countries } from "../types";
+import { SATAUS, type Countries } from "../types";
 
 type GameProps = { data: Countries[] };
 
 const Game: React.FC<GameProps> = ({ data }) => {
   const capitalsMap = useMemo(() => createEnumFromObjects(data), []);
 
-  const [alertMessage, setAlertMessage] = useState("");
+  const [status, setStatus] = useState<SATAUS | undefined>(undefined);
   const [userScore, setUserScore] = useState(30);
   const [counties, setCountries] = useState(
     shuffleArray(data.map((country) => country.name))
@@ -22,19 +24,43 @@ const Game: React.FC<GameProps> = ({ data }) => {
   const [selectedCountry, setSelectedCountry] = useState("");
   const [selectedCapital, setSelectedCapital] = useState("");
 
-  console.log(capitalsMap);
-
   useEffect(() => {
+    let timer = undefined;
+
     if (selectedCountry && selectedCapital) {
       if (capitalsMap[selectedCountry] === selectedCapital) {
+        setStatus(SATAUS.CORRECT);
         setUserScore((score) => score + 7);
-      } else {
-        setUserScore((score) => score - 5);
-      }
 
-      setSelectedCountry("");
-      setSelectedCapital("");
+        timer = setTimeout(() => {
+          setStatus(undefined);
+          setCountries((countries) =>
+            countries.filter((country) => country !== selectedCountry)
+          );
+
+          setCapitals((capitals) =>
+            capitals.filter((capital) => capital !== selectedCapital)
+          );
+          setSelectedCountry("");
+          setSelectedCapital("");
+        }, 1000);
+      } else {
+        setUserScore((score) => (score - 5 <= 0 ? 0 : score - 5));
+        setStatus(SATAUS.WRONG);
+
+        timer = setTimeout(() => {
+          setStatus(undefined);
+          setSelectedCountry("");
+          setSelectedCapital("");
+        }, 1000);
+      }
     }
+
+    return () => {
+      if (timer) {
+        clearTimeout(timer);
+      }
+    };
   }, [selectedCountry, selectedCapital]);
 
   return (
@@ -45,12 +71,14 @@ const Game: React.FC<GameProps> = ({ data }) => {
         <List
           data={counties}
           selectedItem={selectedCountry}
+          status={status}
           onSelect={(country) => setSelectedCountry(country)}
         />
 
         <List
           data={capitals}
           selectedItem={selectedCapital}
+          status={status}
           onSelect={(capital) => setSelectedCapital(capital)}
         />
       </div>

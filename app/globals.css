@@ -85,7 +85,7 @@ body {
   overflow-x: hidden;
 }
 
-body{
+body {
   background-color: rgb(55, 55, 55);
 }
 
@@ -97,5 +97,52 @@ a {
 @media (prefers-color-scheme: dark) {
   html {
     color-scheme: dark;
+  }
+}
+
+.container {
+  height: 100vh;
+  width: 800px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.playBtn {
+  margin-top: 10px;
+  padding: 10px 20px;
+  background-color: #00fbff;
+  color: #313131;
+  border-radius: 20px;
+  font-weight: 800;
+}
+
+.playBtn:hover {
+  color: #000;
+}
+
+.main-background {
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+.main-content {
+  position: fixed;
+  z-index: 10;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+
+@media only screen and (max-width: 600px) {
+  .container{
+    width: 100%;
   }
 }

@@ -5,24 +5,32 @@
 }
 
 .listItem {
-  width: 100px;
+  box-sizing: border-box;
+  width: 150px;
   height: 50px;
   margin: 0 10px;
+  font-weight: 800;
   text-align: center;
-  line-height: 50px;
-  border: 1px solid #000;
+  line-height: 45px;
+  background-color: rgba(0, 0, 0, 0.763);
+  color: #fff;
+  border-radius: 10px;
+  border: 2px solid #fff;
   cursor: pointer;
 
   &--selected {
-    background-color: #a1a1a1;
+    background-color: #fff;
+    color: #000;
   }
 
   &--correct {
     background-color: green !important;
+    color: #fff;
   }
 
   &--wrong {
     background-color: red !important;
+    color: #fff;
   }
 }
 

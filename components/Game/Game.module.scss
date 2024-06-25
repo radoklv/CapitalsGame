@@ -1,8 +1,18 @@
+.gameContainer{
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
 .listWrapper {
   display: flex;
   justify-content: center;
 }
 
 .score {
+  background-color: rgba(0, 0, 0, 0.738);
+  width: 250px;
+  padding: 10px 20px;
+  border-radius: 10px;
   text-align: center;
+  margin: 15px 0;
 }

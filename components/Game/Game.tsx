@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useMemo, useState } from "react";
+import { useRouter } from "next/navigation";
 import classes from "./Game.module.scss";
 
 import List from "@/components/List";
@@ -10,6 +11,7 @@ import { SATAUS, type Countries } from "../types";
 type GameProps = { data: Countries[] };
 
 const Game: React.FC<GameProps> = ({ data }) => {
+  const router = useRouter();
   const capitalsMap = useMemo(() => createEnumFromObjects(data), []);
 
   const [status, setStatus] = useState<SATAUS | undefined>(undefined);
@@ -56,6 +58,13 @@ const Game: React.FC<GameProps> = ({ data }) => {
       }
     }
 
+    if (!capitals.length) {
+      const params = new URLSearchParams();
+      params.set("score", userScore.toString());
+
+      router.replace(`/result?${params.toString()}`);
+    }
+
     return () => {
       if (timer) {
         clearTimeout(timer);
@@ -64,22 +73,26 @@ const Game: React.FC<GameProps> = ({ data }) => {
   }, [selectedCountry, selectedCapital]);
 
   return (
-    <div>
-      <p className={classes.score}>{`User score ${userScore}`}</p>
+    <div className={classes.gameContainer}>
+      <h2 className={classes.score}>{`Score: ${userScore}`}</h2>
 
       <div className={classes.listWrapper}>
         <List
           data={counties}
           selectedItem={selectedCountry}
           status={status}
-          onSelect={(country) => setSelectedCountry(country)}
+          onSelect={(country) =>
+            status === undefined && setSelectedCountry(country)
+          }
         />
 
         <List
           data={capitals}
           selectedItem={selectedCapital}
           status={status}
-          onSelect={(capital) => setSelectedCapital(capital)}
+          onSelect={(capital) =>
+            status === undefined && setSelectedCapital(capital)
+          }
         />
       </div>
     </div>

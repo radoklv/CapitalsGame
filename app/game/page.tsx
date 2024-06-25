@@ -1,6 +1,5 @@
 import React from "react";
 import dynamic from "next/dynamic";
-import classes from "./page.module.scss";
 
 const Game = dynamic(() => import("@/components/Game"), { ssr: false });
 
@@ -11,7 +10,7 @@ async function GamePage() {
   const data = await getData();
 
   return (
-    <div className={classes.gamePage}>
+    <div>
       <Game data={data} />
     </div>
   );

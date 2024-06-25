@@ -2,6 +2,8 @@
 
 First, run the development server:
 
+Note: Please use node 20.11.0
+
 ```bash
 npm install
 #then

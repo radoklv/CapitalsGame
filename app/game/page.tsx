@@ -3,21 +3,22 @@ import dynamic from "next/dynamic";
 
 const Game = dynamic(() => import("@/components/Game"), { ssr: false });
 
-const url = "https://lenotask.000webhostapp.com/getCountiesData/";
+const endpoint = "https://lenotask.000webhostapp.com/getCountiesData/";
 const token = "c4caaefe5fa7dc03456136d044ab89555941a2";
 
 async function GamePage() {
+  //Фечване на данните тук, тъй като страниците в /app се рендерират на сървъра
   const data = await getData();
 
   return (
-    <div>
+    <>
       <Game data={data} />
-    </div>
+    </>
   );
 }
 
 async function getData() {
-  const res = await fetch(url, {
+  const res = await fetch(endpoint, {
     method: "GET",
     headers: {
       Authorization: `Bearer ${token}`,
@@ -26,7 +27,6 @@ async function getData() {
   });
 
   if (!res.ok) {
-    // This will activate the closest `error.js` Error Boundary
     throw new Error("Failed to fetch data");
   }
 

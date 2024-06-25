@@ -5,9 +5,10 @@ import classes from "./page.module.scss";
 import React from "react";
 import Link from "next/link";
 
-const ResultPage = (props: any) => {
+const ResultPage = () => {
   const searchParams = useSearchParams();
 
+  //Взимане на параметъра score от url-a
   const score = Number(searchParams.get("score"));
 
   let result;

@@ -9,28 +9,26 @@ const List: React.FC<ListProps> = ({
   selectedItem,
   status,
   onSelect,
-}) => {
-  return (
-    <ul className={classes.list}>
-      {data.map((data) => (
-        <li
-          className={clsx(
-            classes.listItem,
-            data === selectedItem && classes["listItem--selected"],
-            data === selectedItem &&
-              status === SATAUS.CORRECT &&
-              classes["listItem--correct"],
-            data === selectedItem &&
-              status === SATAUS.WRONG &&
-              classes["listItem--wrong"]
-          )}
-          onClick={() => onSelect(data)}
-        >
-          {data}
-        </li>
-      ))}
-    </ul>
-  );
-};
+}) => (
+  <ul className={classes.list}>
+    {data.map((data) => (
+      <li
+        className={clsx(
+          classes.listItem,
+          data === selectedItem && classes["listItem--selected"],
+          data === selectedItem &&
+            status === SATAUS.CORRECT &&
+            classes["listItem--correct"],
+          data === selectedItem &&
+            status === SATAUS.WRONG &&
+            classes["listItem--wrong"]
+        )}
+        onClick={() => onSelect(data)}
+      >
+        {data}
+      </li>
+    ))}
+  </ul>
+);
 
 export default List;

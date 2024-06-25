@@ -13,6 +13,7 @@ const List: React.FC<ListProps> = ({
   <ul className={classes.list}>
     {data.map((data) => (
       <li
+        key={data}
         className={clsx(
           classes.listItem,
           data === selectedItem && classes["listItem--selected"],
